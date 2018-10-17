@@ -1,0 +1,19 @@
+{
+  "name": "word2json",
+  "version": "0.0.0",
+  "description": "Convert .docx documents to a valid json format",
+  "main": "Convert .docx documents to a valid json format",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jonasdero/word2json.git"
+  },
+  "author": "jonasdero",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Jonasdero/word2json/issues"
+  },
+  "homepage": "https://github.com/Jonasdero/word2json#readme"
+}
