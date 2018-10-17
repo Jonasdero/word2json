@@ -61,3 +61,5 @@ typings/
 .next
 
 testfiles/
+result.json
+package-lock.json
