@@ -18,6 +18,7 @@
   "homepage": "https://github.com/Jonasdero/word2json#readme",
   "dependencies": {
     "himalaya": "^1.1.0",
-    "mammoth": "^1.4.6"
+    "mammoth": "^1.4.6",
+    "word2pdf": "^1.0.7"
   }
 }

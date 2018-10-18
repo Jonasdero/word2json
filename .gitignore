@@ -60,6 +60,8 @@ typings/
 # next.js build output
 .next
 
-testfiles/
+inputJSON/
+inputPDF/
+outputPDF/
 result.json
 package-lock.json
