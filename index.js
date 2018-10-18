@@ -4,9 +4,11 @@ const path = require('path');
 const mammoth = require("mammoth");
 const himalaya = require("himalaya");
 
+//Information where to save the document after it is created
 var saveFileName = 'result.json';
 var dir = './testfiles'
 
+//Sets the required metadata for the documenthead
 var settings = {
   vorname: "Jonas",
   nachname: "Roser",
@@ -20,6 +22,7 @@ var settings = {
 var weeks = [];
 var length = -1;
 
+//Checks if targetdirectory exists and creates it if it doesn't
 if (fs.existsSync(path.join(__dirname, saveFileName)))
   fs.unlinkSync(path.join(__dirname, saveFileName));
 
@@ -50,6 +53,7 @@ function parseJSON(json) {
   var table = json[1].children[1];
   var days = ['Mo', 'Di', 'Mi', 'Do', 'Fr'];
 
+  //Index is set here to have leave it unchanged by the loop
   var index = 1;
 
   for (let day of days) {
@@ -73,6 +77,7 @@ function parseJSON(json) {
     saveJSON({ settings: settings, weeks: weeks });
 }
 
+//Writes the file to the targetpath and gives a notification wether it worked
 function saveJSON(data) {
   fs.writeFile(saveFileName, JSON.stringify(data, null, 4), function (err) {
     if (err) {
