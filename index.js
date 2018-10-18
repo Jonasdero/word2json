@@ -5,10 +5,12 @@ const mammoth = require("mammoth");
 const himalaya = require("himalaya");
 
 //Information where to save the document after it is created
+//Angabe wo die zu erstellende Datei gespeichert werden soll
 var saveFileName = 'result.json';
 var dir = './inputJSON';
 
 //Sets the required metadata for the documenthead
+//Festlegen der notwendigen Metadaten im Dokumentenkopf
 var settings = {
   vorname: "Jonas",
   nachname: "Roser",
@@ -23,6 +25,7 @@ var weeks = [];
 var length = -1;
 
 //Checks if target directory exists and creates it if doesn't
+//Überprüfung, ob das Zielverzeichnis schon existiert. Tut es das nicht, wird es angelegt
 if (fs.existsSync(path.join(__dirname, saveFileName)))
   fs.unlinkSync(path.join(__dirname, saveFileName));
 
@@ -53,7 +56,8 @@ function parseJSON(json) {
   var table = json[1].children[1];
   var days = ['Mo', 'Di', 'Mi', 'Do', 'Fr'];
 
-  //index is set here to have leave it unchanged by the loop
+  //Index is set here to have leave it unchanged by the loop
+  //Index wird hier definiert, um die Variable nicht durch die Schleife zu verändern
   var index = 1;
 
   for (let day of days) {
@@ -76,7 +80,8 @@ function parseJSON(json) {
     saveJSON({ settings: settings, weeks: weeks });
 }
 
-//writes the file to the targetpath and gives a notification wether it worked
+//Writes the file to the targetpath and gives a notification wether it worked
+//Schreibt die Datei in das Zielverzeichnis und gibt eine Nachricht aus, ob der Vorgang funktioniert hat
 function saveJSON(data) {
   fs.writeFile(saveFileName, JSON.stringify(data, null, 4), function (err) {
     if (err) {
