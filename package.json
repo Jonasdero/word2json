@@ -1,10 +1,11 @@
 {
   "name": "word2json",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Convert .docx documents to a valid json format",
   "main": "Convert .docx documents to a valid json format",
   "scripts": {
-    "test": "node index.js"
+    "json": "node json.js",
+    "pdf": "node pdf.js"
   },
   "repository": {
     "type": "git",

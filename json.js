@@ -4,13 +4,18 @@ const path = require('path');
 const mammoth = require("mammoth");
 const himalaya = require("himalaya");
 
-//Information where to save the document after it is created
-//Angabe wo die zu erstellende Datei gespeichert werden soll
+// Information where to save the document after it is created
+// Angabe wo die zu erstellende Datei gespeichert werden soll
 var saveFileName = 'result.json';
 var dir = './inputJSON';
 
-//Sets the required metadata for the documenthead
-//Festlegen der notwendigen Metadaten im Dokumentenkopf
+process.argv.forEach(function (val, index, array) {
+  if (val === '--path')
+    dir = array[index++];
+});
+
+// Sets the required metadata for the documenthead
+// Festlegen der notwendigen Metadaten im Dokumentenkopf
 var settings = {
   vorname: "Jonas",
   nachname: "Roser",
@@ -24,13 +29,13 @@ var settings = {
 var weeks = [];
 var length = -1;
 
-//Checks if target directory exists and creates it if doesn't
-//Überprüfung, ob das Zielverzeichnis schon existiert. Tut es das nicht, wird es angelegt
-if (fs.existsSync(path.join(__dirname, saveFileName)))
-  fs.unlinkSync(path.join(__dirname, saveFileName));
+// Checks if target directory exists and creates it if doesn't
+// Überprüfung, ob das Zielverzeichnis schon existiert. Tut es das nicht, wird es angelegt
+if (fs.existsSync(ppath.resolve(saveFileName)))
+  fs.unlinkSync(path.resolve(saveFileName));
 
-if (!fs.existsSync(path.join(__dirname, dir)))
-  fs.mkdirSync(path.join(__dirname, dir));
+if (!fs.existsSync(path.resolve(dir)))
+  fs.mkdirSync(path.resolve(dir));
 
 fs.readdir(dir, function (err, filenames) {
   if (err) { console.error(err); return; }
@@ -56,8 +61,8 @@ function parseJSON(json) {
   var table = json[1].children[1];
   var days = ['Mo', 'Di', 'Mi', 'Do', 'Fr'];
 
-  //Index is set here to have leave it unchanged by the loop
-  //Index wird hier definiert, um die Variable nicht durch die Schleife zu verändern
+  // Index is set here to have leave it unchanged by the loop
+  // Index wird hier definiert, um die Variable nicht durch die Schleife zu verändern
   var index = 1;
 
   for (let day of days) {
@@ -80,8 +85,8 @@ function parseJSON(json) {
     saveJSON({ settings: settings, weeks: weeks });
 }
 
-//Writes the file to the targetpath and gives a notification wether it worked
-//Schreibt die Datei in das Zielverzeichnis und gibt eine Nachricht aus, ob der Vorgang funktioniert hat
+// Writes the file to the targetpath and gives a notification wether it worked
+// Schreibt die Datei in das Zielverzeichnis und gibt eine Nachricht aus, ob der Vorgang funktioniert hat
 function saveJSON(data) {
   fs.writeFile(saveFileName, JSON.stringify(data, null, 4), function (err) {
     if (err) {
