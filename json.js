@@ -20,6 +20,7 @@ var settings = {
   vorname: "Jonas",
   nachname: "Roser",
   ausbildungsStart: "07.09.2016",
+  ausbildungsStartDate: null,
   beruf: "Fachinformatiker Anwendungsentwicklung",
   spe: "Siemens Professional Education Paderborn",
   atiw: "Atiw Paderborn",
@@ -29,9 +30,16 @@ var settings = {
 var weeks = [];
 var length = -1;
 
+
+function germanLocalToDate(dateString) {
+  var parts = dateString.split('.');
+  return new Date(+parts[2], +parts[1] - 1, +parts[0]);
+}
+settings.ausbildungsStartDate = germanLocalToDate(settings.ausbildungsStart);
+
 // Checks if target directory exists and creates it if doesn't
 // Überprüfung, ob das Zielverzeichnis schon existiert. Tut es das nicht, wird es angelegt
-if (fs.existsSync(ppath.resolve(saveFileName)))
+if (fs.existsSync(path.resolve(saveFileName)))
   fs.unlinkSync(path.resolve(saveFileName));
 
 if (!fs.existsSync(path.resolve(dir)))
@@ -59,25 +67,27 @@ function parseJSON(json) {
   week.startDate = json[0].children[4].children[1].children[0].children[0].content;
 
   var table = json[1].children[1];
-  var days = ['Mo', 'Di', 'Mi', 'Do', 'Fr'];
 
   // Index is set here to have leave it unchanged by the loop
   // Index wird hier definiert, um die Variable nicht durch die Schleife zu verändern
   var index = 1;
+  week.weekdays = [];
+  for (let d = 0; d <= 5; d++) {
+    week.weekdays.push({
+      hours: 0,
+      content: "",
+    })
 
-  for (let day of days) {
-    week['content' + day] = "";
-    week['h' + day] = "";
     for (let i = index; i < table.children.length - 2; i++) {
       index++;
       var row = table.children[i];
 
       if (row.children.length > 3) break;
       if (row.children[0].children.length > 0 && row.children[0].children[0].children.length > 0) {
-        week['content' + day] += "\n" + row.children[0].children[0].children[0].content.trim();
+        week.weekdays[d].content += "\n" + row.children[0].children[0].children[0].content.trim();
       }
       if (row.children[2].children.length > 0 && row.children[2].children[0].children.length > 0)
-        week['h' + day] = +row.children[2].children[0].children[0].content.replace(",", ".");
+        week.weekdays[d].hours = +row.children[2].children[0].children[0].content.replace(",", ".");
     }
   }
   weeks.push(week);
